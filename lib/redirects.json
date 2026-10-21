@@ -1,0 +1,137 @@
+[
+  {
+    "source": "/self-host/clustering",
+    "destination": "/self-host/clustering/understanding-clustering",
+    "permanent": false
+  },
+  {
+    "source": "/self-host/advanced/enable-geoblocking",
+    "destination": "/self-host/advanced/enable-geolocation",
+    "permanent": false
+  },
+  {
+    "source": "/self-host/advanced/enable-asnblocking",
+    "destination": "/self-host/advanced/enable-asn-lookup",
+    "permanent": false
+  },
+  {
+    "source": "/telemetry",
+    "destination": "/self-host/telemetry",
+    "permanent": false
+  },
+  {
+    "source": "/community/:slug*",
+    "destination": "/self-host/:slug*",
+    "permanent": false
+  },
+  {
+    "source": "/manage/resources/tcp-udp-resources",
+    "destination": "/manage/resources/public/raw-resources",
+    "permanent": false
+  },
+  {
+    "source": "/manage/healthchecks-failover",
+    "destination": "/manage/resources/public/healthchecks-failover",
+    "permanent": false
+  },
+  {
+    "source": "/manage/resources/private/icmp-access",
+    "destination": "/manage/resources/private/port-restrictions",
+    "permanent": false
+  },
+  {
+    "source": "/manage/sites/install-kubernetes",
+    "destination": "/manage/sites/kubernetes/helm",
+    "permanent": true
+  },
+  {
+    "source": "/manage/ai/claude",
+    "destination": "/manage/ai/configure-ai-clients/claude",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/codex",
+    "destination": "/manage/ai/configure-ai-clients/codex",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/opencode",
+    "destination": "/manage/ai/configure-ai-clients/opencode",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/gemini",
+    "destination": "/manage/ai/configure-ai-clients/gemini",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/open-webui",
+    "destination": "/manage/ai/configure-ai-clients/open-webui",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/claude-desktop",
+    "destination": "/manage/ai/configure-ai-clients/claude-desktop",
+    "permanent": false
+  },
+  {
+    "source": "/manage/ai/openclaw",
+    "destination": "/manage/ai/configure-ai-clients/openclaw",
+    "permanent": false
+  },
+  {
+    "source": "/self-host/purchase-license-key",
+    "destination": "/self-host/enterprise-edition/purchase-license-key",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/install-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/update-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/windows",
+    "destination": "/manage/clients/platforms/windows",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/mac",
+    "destination": "/manage/clients/platforms/mac",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/ios",
+    "destination": "/manage/clients/platforms/ios",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/android",
+    "destination": "/manage/clients/platforms/android",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/cli",
+    "destination": "/manage/clients/platforms/cli",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/olm",
+    "destination": "/manage/clients/platforms/olm",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/credentials",
+    "destination": "/manage/clients/machine-clients#credentials",
+    "permanent": true
+  }
+]

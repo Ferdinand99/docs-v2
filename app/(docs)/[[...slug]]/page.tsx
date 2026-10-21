@@ -1,0 +1,95 @@
+import { source } from '@/lib/source';
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+  MarkdownCopyButton,
+} from 'fumadocs-ui/layouts/notebook/page';
+import { ViewOptionsPopover } from '@/components/view-options';
+import { notFound } from 'next/navigation';
+import { getMDXComponents } from '@/components/mdx';
+import type { Metadata } from 'next';
+import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { appName, docsDir, getPageMarkdownUrl, gitConfig, siteUrl } from '@/lib/shared';
+import { AskAIAboutPage } from '@/components/ai/ask-page';
+import { SiteFooter } from '@/components/site-footer';
+import { AskBar } from '@/components/ai/ask-bar';
+import { pageJsonLd } from '@/lib/json-ld';
+import { PageFeedback } from '@/components/page-feedback';
+
+export default async function Page(props: PageProps<'/[[...slug]]'>) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
+  if (!page) notFound();
+
+  const MDX = page.data.body;
+  const markdownUrl = getPageMarkdownUrl(page).url;
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pageJsonLd(page) }} />
+      <DocsPage
+        toc={page.data.toc}
+        full={page.data.full}
+        tableOfContent={{ style: 'clerk' }}
+        // rendered after the previous / next page links
+        footer={{
+          children: (
+            <>
+              <PageFeedback page={page.url} />
+              <SiteFooter />
+              <AskBar />
+            </>
+          ),
+        }}
+      >
+      <DocsTitle>{page.data.title}</DocsTitle>
+      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
+      <div className="flex flex-row flex-wrap gap-2 items-center border-b pb-6">
+        <MarkdownCopyButton markdownUrl={markdownUrl} />
+        <ViewOptionsPopover
+          markdownUrl={markdownUrl}
+          pageUrl={`${siteUrl}${page.url}`}
+          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${docsDir}/${page.path}`}
+        />
+        <AskAIAboutPage title={page.data.title} />
+      </div>
+      <DocsBody>
+        <MDX
+          components={getMDXComponents({
+            // this allows you to link to other pages with relative file paths
+            a: createRelativeLink(source, page),
+          })}
+        />
+      </DocsBody>
+      </DocsPage>
+    </>
+  );
+}
+
+export async function generateStaticParams() {
+  return source.generateParams();
+}
+
+export async function generateMetadata(props: PageProps<'/[[...slug]]'>): Promise<Metadata> {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
+  if (!page) notFound();
+
+  const isHome = page.slugs.length === 0;
+  return {
+    title: isHome ? { absolute: `${page.data.title} | ${appName}` } : page.data.title,
+    description: page.data.description,
+    alternates: {
+      canonical: page.url,
+      types: {
+        'text/markdown': getPageMarkdownUrl(page).url,
+        'application/xml': '/sitemap.xml',
+      },
+    },
+    openGraph: {
+      images: '/images/home-social-graph.png',
+    },
+  };
+}

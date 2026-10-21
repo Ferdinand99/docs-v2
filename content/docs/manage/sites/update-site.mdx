@@ -1,0 +1,43 @@
+---
+title: "Update Sites"
+description: "Update your site to the latest version"
+---
+The update process depends on how you originally installed the site.
+
+Find the latest version in the [GitHub releases](https://github.com/fosrl/cli/releases).
+
+<Note>
+If you installed Newt instead of the Pangolin CLI, see [Install Newt](/manage/sites/install-newt) for Newt-specific commands.
+</Note>
+
+## Docker Installation
+
+Update the image version in your `docker-compose.yml`:
+
+```yaml title="docker-compose.yml"
+services:
+  pangolin-site:
+    image: fosrl/pangolin-cli:{version} #  Replace {version} with the latest version tag
+    # ... rest of config
+```
+
+Then pull and restart:
+
+```bash
+docker compose pull pangolin-site
+docker compose up -d pangolin-site
+```
+
+## Binary Installation
+
+### Auto Installer (Recommended)
+
+If you used the auto installer, simply run it again.
+
+```bash
+curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+```
+
+### Manual Installation
+
+Download the latest binary for your system from [GitHub releases](https://github.com/fosrl/cli/releases) and replace your existing binary.

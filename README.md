@@ -1,35 +1,32 @@
 # Pangolin Documentation
 
-This documentation site is built using [Mintlify](https://mintlify.com). If you'd like to contribute to the documentation or run it locally for development, follow the instructions below.
+The Pangolin docs site, built with [Fumadocs](https://fumadocs.dev) on Next.js.
 
-### Local Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally:
+## Development
 
 ```bash
-npm i -g mint
+npm install
+cp .env.example .env.local   # optional: add an AI key
+npm run dev                  # http://localhost:3000
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+Other scripts: `npm run build`, `npm start`, `npm run types:check`.
 
-```bash
-mint dev
-```
+The site works without an AI key. To enable the assistant, set one provider key in `.env.local` (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GOOGLE_GENERATIVE_AI_API_KEY`). See `.env.example` for model, OpenAI-compatible endpoint, and rate-limit options.
 
-View your local preview at `http://localhost:3000`.
+## Analytics
 
-### Publishing Changes
+Readers can rate each page (👍/👎) and each AI answer. Every AI chat and every search-bar query (with its result count, so searches that found nothing stand out) is recorded so you can see what people look for.
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+- Storage: the docs server forwards events to the Fossorial API (`/api/v1/docs-analytics`), which stores them in its Postgres and deletes anything older than 90 days. Set `FOSSORIAL_API_URL` and `FOSSORIAL_API_KEY` (the API's `API_KEY`) (see `.env.example`); without them nothing is stored and the site works as usual.
+- Viewing: `analytics-dashboard/` is a separate app that reads the API's database directly. See its README.
+- Readers are anonymous: votes carry a random id kept in the browser's localStorage, nothing else.
 
-### Need Help?
+## Writing docs
 
-#### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-#### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
-- [Mintlify community](https://mintlify.com/community)
-- [Pangolin GitHub Repository](https://github.com/fosrl/pangolin)
+- Pages live in `content/docs/**/*.mdx`. The URL is the file path.
+- The sidebar is defined in `lib/navigation.json`. A page that isn't listed there is still published; it just doesn't appear in the sidebar.
+- Callouts and layout components (`Note`, `Info`, `Tip`, `Warning`, `Check`, `Card`, `CardGroup`, `Columns`, `Steps`/`Step`, `Tabs`/`Tab`, `Accordion`/`AccordionGroup`, `Expandable`, `ResponseField`, `Frame`, `Update`) are implemented in `components/mintlify.tsx`. Icon names are mapped in `components/icons.tsx`.
+- Code blocks: ` ```yaml title="config.yml" {3-5}` sets a title and highlights lines 3–5. To make tabbed code, put consecutive blocks with `tab="Name"` in a row.
+- Shared snippets live in `content/snippets/` and are pulled in with `<include>../../snippets/file.mdx</include>`.
+- Images go in `public/images/` and are referenced as `/images/...`.
